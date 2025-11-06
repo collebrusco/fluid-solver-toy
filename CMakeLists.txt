@@ -19,16 +19,16 @@ target_link_libraries(${PROJECT_NAME} FLGL)
 if (WIN32)
   set(FFTW_NAME fftw3w)
 else()
-  set(FFTW_NAME fftw3)
+  set(FFTW_NAME fftw3f)
 endif()
 
 find_library(FFTW
              NAMES ${FFTW_NAME}
-             HINTS /usr/local/lib lib/fftw/bin
+             HINTS /usr/local/lib /opt/homebrew/lib lib/fftw/bin 
              )
 
 if(FFTW)
-    message("FFTW found")
+    message("FFTW found ${FFTW}")
     target_link_libraries(${PROJECT_NAME} ${FFTW})
 else()
     message(FATAL_ERROR "FFTW library not found")
