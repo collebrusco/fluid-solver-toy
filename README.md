@@ -15,13 +15,30 @@ I found [this paper by Jos Stam (2001)](https://www.dgp.toronto.edu/public_user/
 
 Here I've implemented it with [MIT's FFTW](https://www.fftw.org/) FFT library, rendered the fluid field and added some controls for playing with it.      
 For a school project, a team and I implemented our own FFTs in CUDA! Check that [here](https://github.com/collebrusco/361C-term-project), if you have an NVIDIA GPU this makes the solver faster.         
-There are two renderers that you can switch between or overlay: one simply renders the x and y coords of each vector in the red and green components of color, and the other renders the vectors as lines.       
+There are two renderers that you can switch between or overlay: one simply renders the x and y coords of each vector in the red and blue components of color, and the other renders the vectors as lines.       
 The color renderer surprisingly has a very neat and fluid look to it, while the lines give you the traditional vector field rendering.
 
-# Building
-Like any of my graphics projects, this will build on mac windows or linux via cmake. More on that in flgl's [guide](https://github.com/collebrusco/flgl/blob/main/user/README.md).   
-     
-**However** this code depends on fftw as well. FFTW will install itself as a static library somewhere dependent on OS (/usr/local/lib on unix, somewhere on windows). CMake will search for it in the default locations as well as in lib/fftw/bin relative to this repo. Included there by default is fftw3 built for windows x86 and my system (M1 arm64) so you do not need to bother installing fftw if you use either of those systems. Be sure to build fftw with single precision FFTs.
+# Build and Run
+My gfx projects all build on any OS with CMake, but it's easier with Mac and Linux. Windows just needs more help getting a compiler and build tools like make. More on that in flgl's [guide](https://github.com/collebrusco/flgl/blob/main/user/README.md).     
+1. You will need [CMake](https://cmake.org/), install it from the link or with homebrew / apt with `brew install cmake` (mac) or `sudo apt install cmake` (linux)      
+2. There is one dependency for the FFTs, [fftw](https://www.fftw.org/). install with `brew install fftw` (mac) or `sudo apt install fftw` (linux)
+3. Clone the repo, cd there
+```bash
+git clone --recurse-submodules git@github.com:collebrusco/fluid-solver-toy; cd fluid-solver-toy
+```
+If you didn't clone with `--recurse-submodules` you can cd there and run `git submodule update --init --recursive`       
+4. build and run with `make -j r`!     
+
+if you're curious, that does this:
+```
+# builds it
+mkdir -p build
+cd build
+cmake ..
+make
+# and if you include the r, runs it
+./build/fluid
+```
 
 # How Does it Work?
 
